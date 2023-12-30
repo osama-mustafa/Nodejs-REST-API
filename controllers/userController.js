@@ -28,7 +28,6 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 const createUser = asyncHandler(async (req, res) => {
-
     const user = await User.create({
         username: req.body.username,
         email: req.body.email,
@@ -44,7 +43,23 @@ const createUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = async (req, res) => {
-
+    let user = await User.findById(req.params.id);
+    if (user) {
+        user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            runValidators: true,
+            new: true
+        });
+        res.status(200).json({
+            success: true,
+            message: 'Update user successfully',
+            data: user
+        });
+    } else {
+        res.status(404).json({
+            success: false,
+            message: `User with id ${req.params.id} is not found`,
+        });
+    }
 };
 
 const deleteUser = async (req, res) => {
