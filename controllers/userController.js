@@ -1,3 +1,4 @@
+const asyncHandler = require('../middlewares/asyncHandler');
 const User = require('../models/user');
 
 
@@ -14,7 +15,8 @@ const getUser = async (req, res) => {
 
 };
 
-const createUser = async (req, res) => {
+const createUser = asyncHandler(async (req, res) => {
+
     const user = await User.create({
         username: req.body.username,
         email: req.body.email,
@@ -27,7 +29,14 @@ const createUser = async (req, res) => {
         message: 'User created successfully',
         data: user
     });
-};
+
+
+    res.status(400).json({
+        success: false,
+        message: err.message,
+    })
+
+});
 
 const updateUser = async (req, res) => {
 
