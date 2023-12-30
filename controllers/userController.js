@@ -2,7 +2,12 @@ const User = require('../models/user');
 
 
 const getUsers = async (req, res) => {
-
+    const users = await User.find({});
+    res.status(200).json({
+        success: true,
+        message: 'Fetch all users successfully',
+        data: users
+    })
 };
 
 const getUser = async (req, res) => {
@@ -10,7 +15,6 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-    console.log(req.body);
     const user = await User.create({
         username: req.body.username,
         email: req.body.email,
