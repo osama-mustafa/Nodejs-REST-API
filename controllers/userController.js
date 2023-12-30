@@ -7,6 +7,7 @@ const getUsers = async (req, res) => {
     res.status(200).json({
         success: true,
         message: 'Fetch all users successfully',
+        count: users.length,
         data: users
     })
 };
@@ -63,7 +64,20 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
+    let user = await User.findById(req.params.id);
+    if (user) {
+        await User.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            success: true,
+            message: 'Delete user successfully',
+        });
 
+    } else {
+        res.status(404).json({
+            success: false,
+            message: `User with id ${req.params.id} is not found`,
+        });
+    }
 };
 
 module.exports = {
