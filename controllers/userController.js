@@ -11,9 +11,21 @@ const getUsers = async (req, res) => {
     })
 };
 
-const getUser = async (req, res) => {
-
-};
+const getUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+        res.status(200).json({
+            success: true,
+            message: 'Fetch user successfully',
+            data: user
+        })
+    } else {
+        res.status(404).json({
+            success: false,
+            message: `User with id ${req.params.id} is not found`,
+        });
+    }
+});
 
 const createUser = asyncHandler(async (req, res) => {
 
@@ -29,13 +41,6 @@ const createUser = asyncHandler(async (req, res) => {
         message: 'User created successfully',
         data: user
     });
-
-
-    res.status(400).json({
-        success: false,
-        message: err.message,
-    })
-
 });
 
 const updateUser = async (req, res) => {
