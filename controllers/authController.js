@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const asyncHandler = require('../middlewares/asyncHandler');
-const generateToken = require('../middlewares/auth');
 
 const register = asyncHandler(async (req, res) => {
     let payload = {
@@ -19,7 +18,29 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const login = async (req, res) => {
-
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
+        const isPasswordValid = user.isPasswordsMatched(req.body.password);
+        if (isPasswordValid) {
+            let token = user.generateSignedJwtToken();
+            res.status(200).json({
+                success: true,
+                message: 'User loggedin successfully',
+                data: user,
+                token
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
+            });
+        }
+    } else {
+        res.status(401).json({
+            success: false,
+            message: 'Invalid credentials'
+        });
+    }
 };
 
 const logout = async (req, res) => {

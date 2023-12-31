@@ -29,19 +29,17 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-// Hash password before save
+// Hash password before save or when user change password
 UserSchema.pre('save', async function (next) {
-    let user = this;
-    if (user.isModified('password')) {
-        let salt = await bcrypt.genSalt();
-        await bcrypt.hash(this.password, salt, function (err, hash) {
-            if (err) {
-                return next(err);
-            } else {
-                user.password = hash;
-                next();
-            }
-        });
+    if (this.isModified('password')) {
+        try {
+            let salt = await bcrypt.genSalt();
+            let hash = await bcrypt.hash(this.password, salt);
+            this.password = hash;
+            next()
+        } catch (err) {
+            return next(err)
+        }
     } else {
         next();
     }
@@ -52,6 +50,11 @@ UserSchema.methods.generateSignedJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     });
+}
+
+// Compare entered password with hashed password
+UserSchema.methods.isPasswordsMatched = function (enteredPassword) {
+    return bcrypt.compareSync(enteredPassword, this.password);
 }
 
 module.exports = mongoose.model('User', UserSchema);
