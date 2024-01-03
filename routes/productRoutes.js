@@ -12,8 +12,8 @@ const {
 
 
 router.get('/', getProducts);
-router.get('/:id', getProduct);
 router.post('/', authenticateUser, createProduct);
+router.get('/:id', getProduct);
 router.put('/:id', authenticateUser, updateProduct);
 router.delete('/:id', authenticateUser, deleteProduct);
 
