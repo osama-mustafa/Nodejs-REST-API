@@ -46,7 +46,25 @@ const login = async (req, res) => {
             message: 'Invalid credentials'
         });
     }
-};
+}
+
+const getAuthenticatedUser = asyncHandler(async (req, res) => {
+    console.log(req, 'ssssssssssssssssssss')
+    let user = await User.findById(req.user.id);
+    console.log(user, 'user');
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'Something went wrong'
+        })
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'Fetch authenticated user successfully',
+        data: user
+    })
+})
 
 const logout = async (req, res) => {
 };
@@ -54,7 +72,8 @@ const logout = async (req, res) => {
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    getAuthenticatedUser
 }
 
 
