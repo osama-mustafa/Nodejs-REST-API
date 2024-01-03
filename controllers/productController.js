@@ -1,8 +1,6 @@
 const Product = require('../models/product');
 const asyncHandler = require('../middlewares/asyncHandler');
 
-
-
 const getProducts = asyncHandler(async (req, res) => {
     const products = await Product.find({}).populate('user', 'username');
     res.status(200).json({
@@ -44,7 +42,7 @@ const createProduct = asyncHandler(async (req, res) => {
     });
 });
 
-const updateProduct = async (req, res) => {
+const updateProduct = asyncHandler(async (req, res) => {
     let product = await Product.findById(req.params.id);
     if (!product) {
         return res.status(404).json({
@@ -65,9 +63,9 @@ const updateProduct = async (req, res) => {
         message: 'Update product successfully',
         data: product
     });
-};
+});
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
         return res.status(404).json({
@@ -82,7 +80,7 @@ const deleteProduct = async (req, res) => {
         success: true,
         message: 'Delete product successfully'
     });
-};
+});
 
 module.exports = {
     getProducts,
