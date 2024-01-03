@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const asyncHandler = require('../middlewares/asyncHandler');
 
 
 
@@ -6,11 +7,23 @@ const getProducts = async (req, res) => {
 
 };
 
-const getProduct = async (req, res) => {
+const getProduct = asyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).json({
+            success: false,
+            message: `Product with ${req.params.id} is not found`,
+        });
+    }
+    res.status(200).json({
+        success: true,
+        message: 'Fetch Product Successfully',
+        data: product
+    })
 
-};
+});
 
-const createProduct = async (req, res) => {
+const createProduct = asyncHandler(async (req, res) => {
     const product = await Product.create({
         name: req.body.name,
         description: req.body.description,
@@ -23,7 +36,7 @@ const createProduct = async (req, res) => {
         message: 'User created successfully',
         data: product
     });
-};
+});
 
 const updateProduct = async (req, res) => {
 
