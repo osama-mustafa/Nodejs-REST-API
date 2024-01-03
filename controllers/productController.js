@@ -3,9 +3,15 @@ const asyncHandler = require('../middlewares/asyncHandler');
 
 
 
-const getProducts = async (req, res) => {
-
-};
+const getProducts = asyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    res.status(200).json({
+        success: true,
+        message: 'Fetch Products Successfully',
+        count: products.length,
+        data: products
+    })
+});
 
 const getProduct = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
