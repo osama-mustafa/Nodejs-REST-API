@@ -9,7 +9,6 @@ const register = asyncHandler(async (req, res) => {
     }
     let user = await User.create(payload);
     let token = user.generateSignedJwtToken();
-    user.tokens = [token];
     await user.save()
 
     res.status(200).json({
@@ -20,13 +19,12 @@ const register = asyncHandler(async (req, res) => {
     })
 });
 
-const login = async (req, res) => {
+const login = asyncHandler(async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) {
         const isPasswordValid = user.isPasswordsMatched(req.body.password);
         if (isPasswordValid) {
             let token = user.generateSignedJwtToken();
-            user.tokens = [token];
             await user.save()
             res.status(200).json({
                 success: true,
@@ -46,7 +44,7 @@ const login = async (req, res) => {
             message: 'Invalid credentials'
         });
     }
-}
+});
 
 const getAuthenticatedUser = asyncHandler(async (req, res) => {
     let user = await User.findById(req.user.id);
@@ -62,10 +60,19 @@ const getAuthenticatedUser = asyncHandler(async (req, res) => {
         message: 'Fetch authenticated user successfully',
         data: user
     })
-})
+});
 
-const logout = async (req, res) => {
-};
+const logout = asyncHandler(async (req, res) => {
+    const token = req.token;
+    let user = await User.findById(req.user.id);
+    user.blacklist_tokens = [token];
+    await user.save();
+    return res.status(200).json({
+        success: true,
+        message: 'You logout successfully!'
+    });
+
+});
 
 module.exports = {
     register,

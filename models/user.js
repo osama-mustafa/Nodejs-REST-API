@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
-    tokens: {
+    blacklist_tokens: {
         type: [String],
     },
     createdAt: {
