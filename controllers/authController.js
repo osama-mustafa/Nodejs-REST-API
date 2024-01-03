@@ -9,6 +9,9 @@ const register = asyncHandler(async (req, res) => {
     }
     let user = await User.create(payload);
     let token = user.generateSignedJwtToken();
+    user.tokens = [token];
+    await user.save()
+
     res.status(200).json({
         success: true,
         message: 'User registered successfully',
@@ -23,6 +26,8 @@ const login = async (req, res) => {
         const isPasswordValid = user.isPasswordsMatched(req.body.password);
         if (isPasswordValid) {
             let token = user.generateSignedJwtToken();
+            user.tokens = [token];
+            await user.save()
             res.status(200).json({
                 success: true,
                 message: 'User loggedin successfully',
@@ -44,7 +49,6 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-
 };
 
 module.exports = {
