@@ -39,7 +39,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
     res.status(201).json({
         success: true,
-        message: 'User created successfully',
+        message: 'Product created successfully',
         data: product
     });
 });
@@ -49,7 +49,20 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).json({
+            success: false,
+            message: `Product with id ${req.params.id} is not found`,
+        });
+    }
 
+    await Product.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+        success: true,
+        message: 'Delete product successfully'
+    });
 };
 
 module.exports = {
