@@ -49,9 +49,7 @@ const login = async (req, res) => {
 }
 
 const getAuthenticatedUser = asyncHandler(async (req, res) => {
-    console.log(req, 'ssssssssssssssssssss')
     let user = await User.findById(req.user.id);
-    console.log(user, 'user');
     if (!user) {
         return res.status(404).json({
             success: false,
