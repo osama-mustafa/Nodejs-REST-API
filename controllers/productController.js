@@ -4,7 +4,7 @@ const asyncHandler = require('../middlewares/asyncHandler');
 
 
 const getProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+    const products = await Product.find({}).populate('user', 'username');
     res.status(200).json({
         success: true,
         message: 'Fetch Products Successfully',
@@ -14,7 +14,7 @@ const getProducts = asyncHandler(async (req, res) => {
 });
 
 const getProduct = asyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate('user', 'username');
     if (!product) {
         return res.status(404).json({
             success: false,
