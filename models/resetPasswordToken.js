@@ -20,4 +20,5 @@ const ResetPasswordTokenSchema = new mongoose.Schema({
     }
 });
 
+
 module.exports = mongoose.model('ResetPasswordToken', ResetPasswordTokenSchema);

@@ -1,9 +1,7 @@
 const User = require('../models/user');
 const asyncHandler = require('../middlewares/asyncHandler');
-const {
-    generateRandomToken,
-    hashToken,
-    storeToken } = require('../utils/resetPassword');
+const { generateRandomToken, storeToken, isValidToken, setNewPassword } = require('../utils/resetPassword');
+const sendEmail = require('../utils/sendEmail');
 
 const register = asyncHandler(async (req, res) => {
     let payload = {
@@ -80,17 +78,53 @@ const logout = asyncHandler(async (req, res) => {
 
 const forgotPassword = asyncHandler(async (req, res) => {
     let user = await User.findOne({ email: req.body.email }).exec();
-    const randomString = await generateRandomToken();
-    const hashedString = await hashToken(randomString);
-    await storeToken(hashedString, user._id);
+    if (!user) {
+        return res.status(400).json({
+            success: false,
+            message: 'Something went wrong, Please try again later'
+        })
+    }
+    const token = await generateRandomToken();
+    await storeToken(token, user._id);
+    const resetPasswordURL = `http://${req.hostname}:${process.env.PORT}/api/v1/auth/reset-password/${token}`;
+    let htmlMessage = `
+                <h2>Hello</h2><br>
+                <h2>Follow this URL to reset password</h2><br>
+                <a href="${resetPasswordURL}">${resetPasswordURL}</a>
+    `
+    const options = {
+        sender: process.env.EMAIL_SENEDER,
+        receiver: req.body.email,
+        html: htmlMessage
+    }
+    await sendEmail(options);
+    console.log(token, 'token')
+    res.status(200).json({
+        success: true,
+        message: 'If provided email is correct, we will send you reset password instructions'
+    });
+
 });
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const resetPasswordToken = req.params.token
+    await isValidToken(resetPasswordToken);
+    await setNewPassword(resetPasswordToken, req.body.password);
+    res.status(200).json({
+        success: true,
+        message: 'New password has been set successfully, you can now login with the new password'
+    });
+
+});
+
 
 module.exports = {
     register,
     login,
     logout,
     getAuthenticatedUser,
-    forgotPassword
+    forgotPassword,
+    resetPassword
 }
 
 
