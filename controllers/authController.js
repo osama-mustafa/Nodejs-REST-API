@@ -1,5 +1,9 @@
 const User = require('../models/user');
 const asyncHandler = require('../middlewares/asyncHandler');
+const {
+    generateRandomToken,
+    hashToken,
+    storeToken } = require('../utils/resetPassword');
 
 const register = asyncHandler(async (req, res) => {
     let payload = {
@@ -74,11 +78,19 @@ const logout = asyncHandler(async (req, res) => {
 
 });
 
+const forgotPassword = asyncHandler(async (req, res) => {
+    let user = await User.findOne({ email: req.body.email }).exec();
+    const randomString = await generateRandomToken();
+    const hashedString = await hashToken(randomString);
+    await storeToken(hashedString, user._id);
+});
+
 module.exports = {
     register,
     login,
     logout,
-    getAuthenticatedUser
+    getAuthenticatedUser,
+    forgotPassword
 }
 
 
