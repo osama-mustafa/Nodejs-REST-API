@@ -3,7 +3,7 @@ const guestMiddleware = (req, res, next) => {
     if (authHeader) {
         return res.status(400).json({
             success: false,
-            message: 'You are already authenticated user'
+            message: 'Your are not authorized to access this route'
         });
     }
     next();

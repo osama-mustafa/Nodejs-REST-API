@@ -29,10 +29,11 @@ const storeToken = async (hashedToken, userId) => {
 }
 
 const isValidToken = async (token) => {
-    let resetPasswordToken = await ResetPasswordToken.findOne({ token: token });
-    return resetPasswordToken && resetPasswordToken?.expiredAt?.getTime() > Date.now()
-        ? true
-        : false
+    let resetPasswordToken = await ResetPasswordToken.findOne({ token: token, isUsed: false });
+    if (resetPasswordToken?.expiredAt?.getTime() > Date.now()) {
+        return true;
+    }
+
 }
 
 const setNewPassword = async (validToken, newPassword) => {
@@ -40,7 +41,9 @@ const setNewPassword = async (validToken, newPassword) => {
         const token = await ResetPasswordToken.findOne({ token: validToken });
         const user = await User.findById(token.user);
         user.password = newPassword;
+        token.isUsed = true;
         await user.save();
+        await token.save();
         return true;
 
     } catch (err) {

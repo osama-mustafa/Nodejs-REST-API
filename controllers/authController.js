@@ -67,7 +67,7 @@ const getAuthenticatedUser = asyncHandler(async (req, res) => {
 const logout = asyncHandler(async (req, res) => {
     const token = req.token;
     let user = await User.findById(req.user.id);
-    user.blacklist_tokens = [token];
+    await user.updateOne({ $push: { blacklist_tokens: token } })
     await user.save();
     return res.status(200).json({
         success: true,
@@ -81,7 +81,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     if (!user) {
         return res.status(400).json({
             success: false,
-            message: 'Something went wrong, Please try again later'
+            message: 'Invalid credentials for resetting password'
         })
     }
     const token = await generateRandomToken();
@@ -98,7 +98,6 @@ const forgotPassword = asyncHandler(async (req, res) => {
         html: htmlMessage
     }
     await sendEmail(options);
-    console.log(token, 'token')
     res.status(200).json({
         success: true,
         message: 'If provided email is correct, we will send you reset password instructions'
@@ -108,12 +107,18 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
 const resetPassword = asyncHandler(async (req, res) => {
     const resetPasswordToken = req.params.token
-    await isValidToken(resetPasswordToken);
-    await setNewPassword(resetPasswordToken, req.body.password);
-    res.status(200).json({
-        success: true,
-        message: 'New password has been set successfully, you can now login with the new password'
-    });
+    const isResetTokenValid = await isValidToken(resetPasswordToken);
+    if (isResetTokenValid) {
+        await setNewPassword(resetPasswordToken, req.body.password);
+        return res.status(200).json({
+            success: true,
+            message: 'New password has been set successfully, you can now login with the new password'
+        });
+    }
+    return res.status(400).json({
+        success: false,
+        message: 'your reset password token is expired or invalid'
+    })
 
 });
 
