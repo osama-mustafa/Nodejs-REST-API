@@ -28,10 +28,11 @@ const getProduct = asyncHandler(async (req, res) => {
 });
 
 const createProduct = asyncHandler(async (req, res) => {
+    console.log(req.file)
     const product = await Product.create({
         name: req.body.name,
         description: req.body.description,
-        image: req.body.image,
+        image: req.file?.filename,
         user: req.user.id
     });
 
