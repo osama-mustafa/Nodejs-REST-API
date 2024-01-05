@@ -15,11 +15,9 @@ connectDB();
 app.use(bodyParser.json());
 
 // Load routes
-app.use('/api/v1/users', usersRoutes);
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/products', productRoutes);
-
-
+app.use(`${process.env.API_VERSION}/users`, usersRoutes);
+app.use(`${process.env.API_VERSION}/auth`, authRoutes);
+app.use(`${process.env.API_VERSION}/products`, productRoutes);
 
 app.listen(PORT, () => {
     console.log(`REST API App is working on port ${PORT}`);
