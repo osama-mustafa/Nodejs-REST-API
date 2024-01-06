@@ -7,12 +7,16 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
+const rateLimitMiddleware = require('./middlewares/rateLimitMiddleware');
 
 // Connect to DB
 connectDB();
 
 // Parse application/json
 app.use(bodyParser.json());
+
+// Enable rate limit
+app.use(rateLimitMiddleware);
 
 // Load routes
 app.use(`${process.env.API_VERSION}/users`, usersRoutes);
