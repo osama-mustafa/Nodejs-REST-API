@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const isTokenBlacklisted = require('../middlewares/blacklistToken');
 const {
     getProducts,
@@ -13,12 +13,12 @@ const uploadImageMiddleware = require('../middlewares/uploadImageMiddleware');
 
 router.get('/', getProducts);
 router.post('/',
-    authMiddleware,
+    authenticationMiddleware,
     isTokenBlacklisted,
     uploadImageMiddleware.single('file'),
     createProduct);
 router.get('/:id', getProduct);
-router.put('/:id', authMiddleware, isTokenBlacklisted, updateProduct);
-router.delete('/:id', authMiddleware, isTokenBlacklisted, deleteProduct);
+router.put('/:id', authenticationMiddleware, isTokenBlacklisted, updateProduct);
+router.delete('/:id', authenticationMiddleware, isTokenBlacklisted, deleteProduct);
 
 module.exports = router;

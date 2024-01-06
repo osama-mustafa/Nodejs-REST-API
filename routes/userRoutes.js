@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware');
+const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const adminMiddleware = require('../middlewares/adminMiddleware');
 const isTokenBlacklisted = require('../middlewares/blacklistToken');
 const {
@@ -11,10 +11,39 @@ const {
     deleteUser
 } = require('../controllers/userController');
 
-router.get('/', authMiddleware, isTokenBlacklisted, adminMiddleware, getUsers);
-router.post('/', authMiddleware, isTokenBlacklisted, adminMiddleware, createUser);
-router.get('/:id', authMiddleware, isTokenBlacklisted, adminMiddleware, getUser);
-router.put('/:id', authMiddleware, isTokenBlacklisted, adminMiddleware, updateUser);
-router.delete('/:id', authMiddleware, isTokenBlacklisted, adminMiddleware, deleteUser);
+router.get('/', [
+    authenticationMiddleware,
+    isTokenBlacklisted,
+    adminMiddleware,
+    getUsers
+]);
+
+router.post('/', [
+    authenticationMiddleware,
+    isTokenBlacklisted,
+    adminMiddleware,
+    createUser
+]);
+
+router.get('/:id', [
+    authenticationMiddleware,
+    isTokenBlacklisted,
+    adminMiddleware,
+    getUser
+]);
+
+router.put('/:id', [
+    authenticationMiddleware,
+    isTokenBlacklisted,
+    adminMiddleware,
+    updateUser
+]);
+
+router.delete('/:id', [
+    authenticationMiddleware,
+    isTokenBlacklisted,
+    adminMiddleware,
+    deleteUser
+]);
 
 module.exports = router;

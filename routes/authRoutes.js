@@ -7,7 +7,7 @@ const {
     getAuthenticatedUser,
     forgotPassword,
     resetPassword } = require('../controllers/authController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../middlewares/authenticationMiddleware');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const isTokenBlacklisted = require('../middlewares/blacklistToken');
 

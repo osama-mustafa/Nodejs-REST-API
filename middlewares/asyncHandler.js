@@ -7,6 +7,11 @@ const asyncHandler = (fn) => (req, res, next) => {
                     success: false,
                     message: err.message
                 });
+            } else if (err.name === 'MongoServerError' && err.code == 11000) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Duplicate record, resource already exists!'
+                })
             } else {
                 next(err);
             }
