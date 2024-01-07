@@ -9,7 +9,7 @@ const getUsers = asyncErrorHandler(async (req, res) => {
         message: 'Fetch all users successfully',
         count: users.length,
         data: users
-    })
+    });
 });
 
 const getUser = asyncErrorHandler(async (req, res) => {
@@ -19,7 +19,7 @@ const getUser = asyncErrorHandler(async (req, res) => {
             success: true,
             message: 'Fetch user successfully',
             data: user
-        })
+        });
     } else {
         res.status(404).json({
             success: false,

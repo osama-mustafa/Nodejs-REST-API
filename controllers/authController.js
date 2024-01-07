@@ -11,14 +11,14 @@ const register = asyncErrorHandler(async (req, res) => {
     }
     let user = await User.create(payload);
     let token = user.generateSignedJwtToken();
-    await user.save()
+    await user.save();
 
     res.status(200).json({
         success: true,
         message: 'User registered successfully',
         data: user,
         token
-    })
+    });
 });
 
 const login = asyncErrorHandler(async (req, res) => {
@@ -33,7 +33,7 @@ const login = asyncErrorHandler(async (req, res) => {
                 message: 'User loggedin successfully',
                 data: user,
                 token
-            })
+            });
         } else {
             res.status(401).json({
                 success: false,
@@ -53,8 +53,8 @@ const getAuthenticatedUser = asyncErrorHandler(async (req, res) => {
     if (!user) {
         return res.status(404).json({
             success: false,
-            message: 'Something went wrong'
-        })
+            message: 'User not found'
+        });
     }
 
     res.status(200).json({
@@ -81,7 +81,7 @@ const forgotPassword = asyncErrorHandler(async (req, res) => {
         return res.status(400).json({
             success: false,
             message: 'Invalid credentials for resetting password'
-        })
+        });
     }
     const token = await generateRandomToken();
     await storeToken(token, user._id);
@@ -104,7 +104,7 @@ const forgotPassword = asyncErrorHandler(async (req, res) => {
 });
 
 const resetPassword = asyncErrorHandler(async (req, res) => {
-    const resetPasswordToken = req.params.token
+    const resetPasswordToken = req.params.token;
     const isResetTokenValid = await isValidToken(resetPasswordToken);
     if (isResetTokenValid) {
         await setNewPassword(resetPasswordToken, req.body.password);
@@ -116,7 +116,7 @@ const resetPassword = asyncErrorHandler(async (req, res) => {
     return res.status(400).json({
         success: false,
         message: 'your reset password token is expired or invalid'
-    })
+    });
 });
 
 module.exports = {

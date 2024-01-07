@@ -8,7 +8,7 @@ const getProducts = asyncErrorHandler(async (req, res) => {
         message: 'Fetch Products Successfully',
         count: products.length,
         data: products
-    })
+    });
 });
 
 const getProduct = asyncErrorHandler(async (req, res) => {
@@ -23,8 +23,7 @@ const getProduct = asyncErrorHandler(async (req, res) => {
         success: true,
         message: 'Fetch Product Successfully',
         data: product
-    })
-
+    });
 });
 
 const createProduct = asyncErrorHandler(async (req, res) => {
@@ -48,7 +47,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
         return res.status(404).json({
             success: false,
             message: `Product with ${req.params.id} is not found`
-        })
+        });
     }
     product = await Product.findByIdAndUpdate(req.params.id, {
         name: req.body.name,

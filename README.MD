@@ -1,4 +1,4 @@
-# RESTful API with Express & Mongo Following Best Practices: 
+## RESTful API with Express & Mongo Following Best Practices: 
 - API Documentation
 - API Rate Limiting
 - API Versioning
