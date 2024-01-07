@@ -11,6 +11,7 @@ const fs = require("fs");
 const YAML = require('yaml')
 const PORT = process.env.PORT || 3000;
 const rateLimitMiddleware = require('./middlewares/rateLimitMiddleware');
+const helmet = require('helmet');
 
 // Connect to DB
 connectDB();
@@ -18,20 +19,23 @@ connectDB();
 // Parse application/json
 app.use(bodyParser.json());
 
-// Enable rate limit
+// Enable rate limiting
 app.use(rateLimitMiddleware);
+
+// Use Helmet middleware for security
+app.use(helmet());
 
 // Load routes
 app.use(`${process.env.API_VERSION}/users`, usersRoutes);
 app.use(`${process.env.API_VERSION}/auth`, authRoutes);
 app.use(`${process.env.API_VERSION}/products`, productRoutes);
 
-// Swagger UI Express for API Documentation
+// Swagger UI Express for API documentation
 const swaggerFile = fs.readFileSync('./swagger.yaml', 'utf8')
 const swaggerDocument = YAML.parse(swaggerFile)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Serve Static Files
+// Serve static files
 app.use(express.static('public'));
 
 app.listen(PORT, () => {
