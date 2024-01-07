@@ -10,6 +10,7 @@ const {
     updateUser,
     deleteUser
 } = require('../controllers/userController');
+const createUserValidator = require('../utils/validators/userValidator');
 
 router.get('/', [
     authenticationMiddleware,
@@ -22,6 +23,7 @@ router.post('/', [
     authenticationMiddleware,
     isTokenBlacklisted,
     adminMiddleware,
+    createUserValidator,
     createUser
 ]);
 
