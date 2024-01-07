@@ -1,9 +1,9 @@
 const User = require('../models/user');
-const asyncHandler = require('../middlewares/asyncHandler');
+const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const { generateRandomToken, storeToken, isValidToken, setNewPassword } = require('../utils/resetPassword');
 const sendEmail = require('../utils/sendEmail');
 
-const register = asyncHandler(async (req, res) => {
+const register = asyncErrorHandler(async (req, res) => {
     let payload = {
         username: req.body.username,
         email: req.body.email,
@@ -21,7 +21,7 @@ const register = asyncHandler(async (req, res) => {
     })
 });
 
-const login = asyncHandler(async (req, res) => {
+const login = asyncErrorHandler(async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) {
         const isPasswordValid = user.isPasswordsMatched(req.body.password);
@@ -48,7 +48,7 @@ const login = asyncHandler(async (req, res) => {
     }
 });
 
-const getAuthenticatedUser = asyncHandler(async (req, res) => {
+const getAuthenticatedUser = asyncErrorHandler(async (req, res) => {
     let user = await User.findById(req.user.id);
     if (!user) {
         return res.status(404).json({
@@ -64,7 +64,7 @@ const getAuthenticatedUser = asyncHandler(async (req, res) => {
     })
 });
 
-const logout = asyncHandler(async (req, res) => {
+const logout = asyncErrorHandler(async (req, res) => {
     const token = req.token;
     let user = await User.findById(req.user.id);
     await user.updateOne({ $push: { blacklist_tokens: token } })
@@ -73,10 +73,9 @@ const logout = asyncHandler(async (req, res) => {
         success: true,
         message: 'You logout successfully!'
     });
-
 });
 
-const forgotPassword = asyncHandler(async (req, res) => {
+const forgotPassword = asyncErrorHandler(async (req, res) => {
     let user = await User.findOne({ email: req.body.email }).exec();
     if (!user) {
         return res.status(400).json({
@@ -102,10 +101,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
         success: true,
         message: 'If provided email is correct, we will send you reset password instructions'
     });
-
 });
 
-const resetPassword = asyncHandler(async (req, res) => {
+const resetPassword = asyncErrorHandler(async (req, res) => {
     const resetPasswordToken = req.params.token
     const isResetTokenValid = await isValidToken(resetPasswordToken);
     if (isResetTokenValid) {
@@ -119,9 +117,7 @@ const resetPassword = asyncHandler(async (req, res) => {
         success: false,
         message: 'your reset password token is expired or invalid'
     })
-
 });
-
 
 module.exports = {
     register,
@@ -131,5 +127,3 @@ module.exports = {
     forgotPassword,
     resetPassword
 }
-
-

@@ -1,8 +1,8 @@
-const asyncHandler = require('../middlewares/asyncHandler');
+const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const User = require('../models/user');
 
 
-const getUsers = async (req, res) => {
+const getUsers = asyncErrorHandler(async (req, res) => {
     const users = await User.find({});
     res.status(200).json({
         success: true,
@@ -10,9 +10,9 @@ const getUsers = async (req, res) => {
         count: users.length,
         data: users
     })
-};
+});
 
-const getUser = asyncHandler(async (req, res) => {
+const getUser = asyncErrorHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
         res.status(200).json({
@@ -28,7 +28,7 @@ const getUser = asyncHandler(async (req, res) => {
     }
 });
 
-const createUser = asyncHandler(async (req, res) => {
+const createUser = asyncErrorHandler(async (req, res) => {
     const user = await User.create({
         username: req.body.username,
         email: req.body.email,
@@ -43,7 +43,7 @@ const createUser = asyncHandler(async (req, res) => {
     });
 });
 
-const updateUser = async (req, res) => {
+const updateUser = asyncErrorHandler(async (req, res) => {
     let user = await User.findById(req.params.id);
     if (user) {
         user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -61,9 +61,9 @@ const updateUser = async (req, res) => {
             message: `User with id ${req.params.id} is not found`,
         });
     }
-};
+});
 
-const deleteUser = async (req, res) => {
+const deleteUser = asyncErrorHandler(async (req, res) => {
     let user = await User.findById(req.params.id);
     if (user) {
         await User.findByIdAndDelete(req.params.id);
@@ -78,7 +78,7 @@ const deleteUser = async (req, res) => {
             message: `User with id ${req.params.id} is not found`,
         });
     }
-};
+});
 
 module.exports = {
     getUsers,

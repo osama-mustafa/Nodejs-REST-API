@@ -26,12 +26,13 @@ app.use(`${process.env.API_VERSION}/users`, usersRoutes);
 app.use(`${process.env.API_VERSION}/auth`, authRoutes);
 app.use(`${process.env.API_VERSION}/products`, productRoutes);
 
-
-// Swagger UI Express
+// Swagger UI Express for API Documentation
 const swaggerFile = fs.readFileSync('./swagger.yaml', 'utf8')
 const swaggerDocument = YAML.parse(swaggerFile)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+// Serve Static Files
+app.use(express.static('public'));
 
 app.listen(PORT, () => {
     console.log(`REST API App is working on port ${PORT}`);

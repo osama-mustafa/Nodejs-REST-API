@@ -1,7 +1,7 @@
 const Product = require('../models/product');
-const asyncHandler = require('../middlewares/asyncHandler');
+const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 
-const getProducts = asyncHandler(async (req, res) => {
+const getProducts = asyncErrorHandler(async (req, res) => {
     const products = await Product.find({}).populate('user', 'username');
     res.status(200).json({
         success: true,
@@ -11,7 +11,7 @@ const getProducts = asyncHandler(async (req, res) => {
     })
 });
 
-const getProduct = asyncHandler(async (req, res) => {
+const getProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate('user', 'username');
     if (!product) {
         return res.status(404).json({
@@ -27,7 +27,7 @@ const getProduct = asyncHandler(async (req, res) => {
 
 });
 
-const createProduct = asyncHandler(async (req, res) => {
+const createProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.create({
         name: req.body.name,
         description: req.body.description,
@@ -42,7 +42,7 @@ const createProduct = asyncHandler(async (req, res) => {
     });
 });
 
-const updateProduct = asyncHandler(async (req, res) => {
+const updateProduct = asyncErrorHandler(async (req, res) => {
     let product = await Product.findById(req.params.id);
     if (!product) {
         return res.status(404).json({
@@ -65,7 +65,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     });
 });
 
-const deleteProduct = asyncHandler(async (req, res) => {
+const deleteProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
         return res.status(404).json({
@@ -89,4 +89,3 @@ module.exports = {
     updateProduct,
     deleteProduct
 }
-
