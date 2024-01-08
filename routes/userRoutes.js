@@ -10,42 +10,18 @@ const {
     updateUser,
     deleteUser
 } = require('../controllers/userController');
-const createUserValidator = require('../utils/validators/userValidator');
-
-router.get('/', [
-    authenticationMiddleware,
-    isTokenBlacklisted,
-    adminMiddleware,
-    getUsers
-]);
-
-router.post('/', [
-    authenticationMiddleware,
-    isTokenBlacklisted,
-    adminMiddleware,
+const {
     createUserValidator,
-    createUser
-]);
+    updateUserValidator
+} = require('../utils/validators/userValidator');
 
-router.get('/:id', [
-    authenticationMiddleware,
-    isTokenBlacklisted,
-    adminMiddleware,
-    getUser
-]);
 
-router.put('/:id', [
-    authenticationMiddleware,
-    isTokenBlacklisted,
-    adminMiddleware,
-    updateUser
-]);
+router.use(authenticationMiddleware, isTokenBlacklisted, adminMiddleware)
 
-router.delete('/:id', [
-    authenticationMiddleware,
-    isTokenBlacklisted,
-    adminMiddleware,
-    deleteUser
-]);
+router.get('/', getUsers);
+router.post('/', createUserValidator, createUser);
+router.get('/:id', getUser);
+router.put('/:id', updateUserValidator, updateUser);
+router.delete('/:id', deleteUser);
 
 module.exports = router;

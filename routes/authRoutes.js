@@ -3,7 +3,7 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/authenticationMiddleware');
 const guestMiddleware = require('../middlewares/guestMiddleware');
 const isTokenBlacklisted = require('../middlewares/blacklistToken');
-const createUserValidator = require('../utils/validators/userValidator');
+const { createUserValidator } = require('../utils/validators/userValidator');
 const {
     register,
     login,
@@ -16,7 +16,7 @@ router.post('/register', [
     guestMiddleware,
     createUserValidator,
     register]);
-    
+
 router.post('/login', [guestMiddleware, login]);
 router.get('/me', [authMiddleware, isTokenBlacklisted, getAuthenticatedUser])
 router.post('/logout', [authMiddleware, isTokenBlacklisted, logout]);
