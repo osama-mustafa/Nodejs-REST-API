@@ -33,7 +33,6 @@ const isValidToken = async (token) => {
     if (resetPasswordToken?.expiredAt?.getTime() > Date.now()) {
         return true;
     }
-
 }
 
 const setNewPassword = async (validToken, newPassword) => {

@@ -1,4 +1,4 @@
-## RESTful API with Express & Mongo Following Best Practices: 
+## RESTful API with Express & Mongo Has The Following Features: 
 - API Documentation
 - API Rate Limiting
 - API Versioning
@@ -7,3 +7,4 @@
 - Error Handling
 - Proper Status Codes
 - Response Formatting
+- Full Authentication System (Register, Login, Logout, Fogort Password, Reset Password)
