@@ -3,6 +3,8 @@ const router = express.Router();
 const authenticationMiddleware = require('../middlewares/authenticationMiddleware');
 const isTokenBlacklisted = require('../middlewares/blacklistToken');
 const uploadImageMiddleware = require('../middlewares/uploadImageMiddleware');
+const createProductValidator = require('../utils/validators/productValidator');
+
 const {
     getProducts,
     getProduct,
@@ -16,6 +18,7 @@ router.get('/', getProducts);
 router.post('/', [
     authenticationMiddleware,
     isTokenBlacklisted,
+    // createProductValidator,
     uploadImageMiddleware.single('file'),
     createProduct
 ]);
