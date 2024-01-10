@@ -5,7 +5,6 @@ const connectDB = require('./config/db');
 const usersRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
-const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const fs = require("fs");
 const YAML = require('yaml')
@@ -17,7 +16,9 @@ const helmet = require('helmet');
 connectDB();
 
 // Parse application/json
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+
 
 // Enable rate limiting
 app.use(rateLimitMiddleware);

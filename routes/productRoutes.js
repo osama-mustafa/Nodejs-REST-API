@@ -18,8 +18,8 @@ router.get('/', getProducts);
 router.post('/', [
     authenticationMiddleware,
     isTokenBlacklisted,
-    // createProductValidator,
-    uploadImageMiddleware.single('file'),
+    uploadImageMiddleware,
+    createProductValidator,
     createProduct
 ]);
 

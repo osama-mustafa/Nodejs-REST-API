@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
 const ResetPasswordToken = require('../models/resetPasswordToken');
 const User = require('../models/user');
 
@@ -9,7 +8,6 @@ const generateRandomToken = async (size = 32) => {
         const randomString = buf.toString('hex');
         return randomString;
     } catch (err) {
-        console.log(err);
         throw err;
     }
 }
@@ -23,7 +21,6 @@ const storeToken = async (hashedToken, userId) => {
         return token;
 
     } catch (err) {
-        console.log(err);
         throw err;
     }
 }

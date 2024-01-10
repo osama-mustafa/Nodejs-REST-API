@@ -2,7 +2,6 @@ const { body } = require('express-validator');
 const respondWithValidationErrors = require('./validatorHelper');
 
 const createProductValidator = async (req, res, next) => {
-    console.log(req.body);
     await body('name')
         .escape()
         .notEmpty()
