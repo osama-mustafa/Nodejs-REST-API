@@ -17,7 +17,7 @@ connectDB();
 
 // Parse application/json
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+// app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
 
 // Enable rate limiting

@@ -15,9 +15,9 @@ const isImageExtensionAndMIMEValid = (file) => {
         && !blacklistedExtensions.includes(imageExtension))
 }
 
-const generateUniqueName = async (originalName) => {
+const generateUUID = async (originalName) => {
     let extension = originalName.split('.')[1]
-    let uniqueName = await crypto.randomBytes(20).toString('hex');
+    let uniqueName = await crypto.randomUUID();
     return uniqueName + '.' + extension;
 }
 
@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
     },
 
     filename: async function (req, file, cb) {
-        cb(null, await generateUniqueName(file.originalname));
+        cb(null, await generateUUID(file.originalname));
     }
 });
 

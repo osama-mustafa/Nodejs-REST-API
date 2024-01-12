@@ -1,6 +1,7 @@
 # Ignore .env file in the config folder
 /config/.env
 /node_modules
+TODOS.MD
 
 # Track .env.example in the config folder
 !/config/.env.example
