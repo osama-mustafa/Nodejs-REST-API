@@ -6,6 +6,12 @@ const whitelistedExtenions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 const blacklistedExtensions = ['.exe', '.bat', '.com', '.php', '.jsp', '.aspx', '.zip', '.rar', '.svg', '.swf'];
 const path = require('path');
 
+// script.php%00.jpg
+const isImageOriginalNameValid = (fileName) => {
+    const fileNameREGEX = /^[a-zA-Z0-9_.-]+$/;
+    return fileNameREGEX.test(fileName);
+}
+
 const isImageExtensionAndMIMEValid = (file) => {
     let imageExtension = path.extname(file.originalname).toLowerCase();
     let imageMIME = file.mimetype;
@@ -15,8 +21,8 @@ const isImageExtensionAndMIMEValid = (file) => {
         && !blacklistedExtensions.includes(imageExtension))
 }
 
-const generateUUID = async (originalName) => {
-    let extension = originalName.split('.')[1]
+const generateUUID = async (fileName) => {
+    let extension = fileName.split('.')[1]
     let uniqueName = await crypto.randomUUID();
     return uniqueName + '.' + extension;
 }
@@ -36,6 +42,10 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
+        console.log(isImageOriginalNameValid(file.originalname), 'isImageOriginalNameValid(file.originalname)')
+        if (!isImageOriginalNameValid(file.originalname)) {
+            cb(new Error('Invalid characters in image name, please rename it, or upload another image'))
+        }
         if (isImageExtensionAndMIMEValid(file)) {
             cb(null, true)
         } else {
