@@ -10,7 +10,8 @@ const {
     logout,
     getAuthenticatedUser,
     forgotPassword,
-    resetPassword } = require('../controllers/authController');
+    resetPassword,
+    updatePassword } = require('../controllers/authController');
 
 router.post('/register', [
     guestMiddleware,
@@ -22,6 +23,7 @@ router.get('/me', [authMiddleware, isTokenBlacklisted, getAuthenticatedUser])
 router.post('/logout', [authMiddleware, isTokenBlacklisted, logout]);
 router.post('/forgot-password', [guestMiddleware, forgotPassword]);
 router.post('/reset-password/:token', [guestMiddleware, resetPassword]);
+router.post('/update-password', [authMiddleware, updatePassword]);
 
 module.exports = router;
 

@@ -6,7 +6,6 @@ const whitelistedExtenions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 const blacklistedExtensions = ['.exe', '.bat', '.com', '.php', '.jsp', '.aspx', '.zip', '.rar', '.svg', '.swf'];
 const path = require('path');
 
-// script.php%00.jpg
 const isImageOriginalNameValid = (fileName) => {
     const fileNameREGEX = /^[a-zA-Z0-9_.-]+$/;
     return fileNameREGEX.test(fileName);

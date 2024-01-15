@@ -119,11 +119,40 @@ const resetPassword = asyncErrorHandler(async (req, res) => {
     });
 });
 
+
+const updatePassword = asyncErrorHandler(async (req, res) => {
+    const user = await User.findById(req.user.id);
+    const { oldPassword, newPassword } = req.body;
+    if (!user) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not authorized'
+        });
+    }
+
+    const isPasswordConfirmed = user.isPasswordsMatched(oldPassword);
+    if (isPasswordConfirmed) {
+        user.password = newPassword;
+        await user.save();
+        return res.status(200).json({
+            success: true,
+            message: 'New password updated successfully',
+        })
+    } else {
+        return res.status(400).json({
+            success: false,
+            message: 'Old password is incorrect'
+        });
+    }
+
+})
+
 module.exports = {
     register,
     login,
     logout,
     getAuthenticatedUser,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    updatePassword
 }
