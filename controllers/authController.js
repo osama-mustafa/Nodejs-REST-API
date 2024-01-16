@@ -2,6 +2,7 @@ const User = require('../models/user');
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const { generateRandomToken, storeToken, isValidToken, setNewPassword } = require('../utils/resetPassword');
 const sendEmail = require('../utils/sendEmail');
+const messages = require('../utils/messages');
 
 const register = asyncErrorHandler(async (req, res) => {
     const { username, email, password } = req.body;
@@ -11,7 +12,7 @@ const register = asyncErrorHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        message: 'User registered successfully',
+        message: messages.success.USER_REGISTRED,
         data: user,
         token
     });
@@ -26,20 +27,20 @@ const login = asyncErrorHandler(async (req, res) => {
             await user.save()
             res.status(200).json({
                 success: true,
-                message: 'User loggedin successfully',
+                message: messages.success.USER_LOGIN,
                 data: user,
                 token
             });
         } else {
             res.status(401).json({
                 success: false,
-                message: 'Invalid credentials'
+                message: messages.error.INVALID_CREDENTIALS
             });
         }
     } else {
         res.status(401).json({
             success: false,
-            message: 'Invalid credentials'
+            message: messages.error.INVALID_CREDENTIALS
         });
     }
 });
@@ -49,13 +50,13 @@ const getAuthenticatedUser = asyncErrorHandler(async (req, res) => {
     if (!user) {
         return res.status(404).json({
             success: false,
-            message: 'User not found'
+            message: messages.error.RESOURCE_NOT_FOUND
         });
     }
 
     res.status(200).json({
         success: true,
-        message: 'Fetch authenticated user successfully',
+        message: messages.success.GET_RESOUCRE,
         data: user
     })
 });
@@ -67,7 +68,7 @@ const logout = asyncErrorHandler(async (req, res) => {
     await user.save();
     return res.status(200).json({
         success: true,
-        message: 'You logout successfully!'
+        message: messages.success.USER_LOGOUT
     });
 });
 
@@ -76,7 +77,7 @@ const forgotPassword = asyncErrorHandler(async (req, res) => {
     if (!user) {
         return res.status(400).json({
             success: false,
-            message: 'Invalid credentials for resetting password'
+            message: messages.error.INVALID_CREDENTIALS
         });
     }
     const token = await generateRandomToken();
@@ -95,7 +96,7 @@ const forgotPassword = asyncErrorHandler(async (req, res) => {
     await sendEmail(options);
     res.status(200).json({
         success: true,
-        message: 'If provided email is correct, we will send you reset password instructions'
+        message: messages.success.FORGOT_PASSWORD
     });
 });
 
@@ -106,12 +107,12 @@ const resetPassword = asyncErrorHandler(async (req, res) => {
         await setNewPassword(resetPasswordToken, req.body.password);
         return res.status(200).json({
             success: true,
-            message: 'New password has been set successfully, you can now login with the new password'
+            message: messages.success.RESET_PASSWORD
         });
     }
     return res.status(400).json({
         success: false,
-        message: 'your reset password token is expired or invalid'
+        message: messages.error.INVALID_TOKEN
     });
 });
 
@@ -122,7 +123,7 @@ const updatePassword = asyncErrorHandler(async (req, res) => {
     if (!user) {
         return res.status(401).json({
             success: false,
-            message: 'Not authorized'
+            message: messages.error.NOT_AUTHORIZED
         });
     }
 
@@ -132,12 +133,12 @@ const updatePassword = asyncErrorHandler(async (req, res) => {
         await user.save();
         return res.status(200).json({
             success: true,
-            message: 'New password updated successfully',
+            message: messages.success.UPDATE_PASSWORD,
         })
     } else {
         return res.status(400).json({
             success: false,
-            message: 'Old password is incorrect'
+            message: messages.error.INCORRECT_OLD_PASSWORD
         });
     }
 

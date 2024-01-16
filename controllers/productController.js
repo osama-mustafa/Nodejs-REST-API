@@ -1,11 +1,12 @@
 const Product = require('../models/product');
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
+const messages = require('../utils/messages');
 
 const getProducts = asyncErrorHandler(async (req, res) => {
     const products = await Product.find({}).populate('user', 'username');
     res.status(200).json({
         success: true,
-        message: 'Fetch Products Successfully',
+        message: messages.success.GET_RESOURCES,
         count: products.length,
         data: products
     });
@@ -16,12 +17,12 @@ const getProduct = asyncErrorHandler(async (req, res) => {
     if (!product) {
         return res.status(404).json({
             success: false,
-            message: `Product with ${req.params.id} is not found`,
+            message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
     res.status(200).json({
         success: true,
-        message: 'Fetch Product Successfully',
+        message: messages.success.GET_RESOUCRE,
         data: product
     });
 });
@@ -36,7 +37,7 @@ const createProduct = asyncErrorHandler(async (req, res) => {
 
     res.status(201).json({
         success: true,
-        message: 'Product created successfully',
+        message: messages.success.CREATE_RESOURCE,
         data: product
     });
 });
@@ -46,7 +47,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
     if (!product) {
         return res.status(404).json({
             success: false,
-            message: `Product with ${req.params.id} is not found`
+            message: messages.error.RESOURCE_NOT_FOUND
         });
     }
     product = await Product.findByIdAndUpdate(req.params.id, {
@@ -59,7 +60,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        message: 'Update product successfully',
+        message: messages.success.UPDATE_RESOUCRE,
         data: product
     });
 });
@@ -69,7 +70,7 @@ const deleteProduct = asyncErrorHandler(async (req, res) => {
     if (!product) {
         return res.status(404).json({
             success: false,
-            message: `Product with id ${req.params.id} is not found`,
+            message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
 
@@ -77,7 +78,7 @@ const deleteProduct = asyncErrorHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        message: 'Delete product successfully'
+        message: messages.success.DELETE_RESOURCE
     });
 });
 

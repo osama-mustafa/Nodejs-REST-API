@@ -5,6 +5,7 @@ const whitelistedMIME = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
 const whitelistedExtenions = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 const blacklistedExtensions = ['.exe', '.bat', '.com', '.php', '.jsp', '.aspx', '.zip', '.rar', '.svg', '.swf'];
 const path = require('path');
+const messages = require('../utils/messages');
 
 const isImageOriginalNameValid = (fileName) => {
     const fileNameREGEX = /^[a-zA-Z0-9_.-]+$/;
@@ -42,12 +43,12 @@ const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
         if (!isImageOriginalNameValid(file.originalname)) {
-            cb(new Error('Invalid characters in image name, please rename it, or upload another image'))
+            cb(new Error(messages.error.INVALID_FILE_NAME))
         }
         if (isImageExtensionAndMIMEValid(file)) {
             cb(null, true)
         } else {
-            cb(new Error('The file you provided is not a valid image'))
+            cb(new Error(messages.error.INVALID_IMAGE))
         }
     },
     limits: {
@@ -62,7 +63,7 @@ module.exports = (req, res, next) => {
             if (err.code == 'LIMIT_FILE_SIZE') {
                 return res.status(400).json({
                     success: false,
-                    message: 'File size is too large. Max 1MB allowed.'
+                    message: messages.error.INVALID_FILE_SIZE
                 });
             }
             return res.status(400).json({

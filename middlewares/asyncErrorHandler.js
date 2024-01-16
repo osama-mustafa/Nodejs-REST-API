@@ -1,3 +1,5 @@
+const messages = require("../utils/messages");
+
 const asyncHandler = (fn) => (req, res, next) => {
     Promise.resolve(fn(req, res, next))
         .catch((err) => {
@@ -10,7 +12,7 @@ const asyncHandler = (fn) => (req, res, next) => {
             } else if (err.name === 'MongoServerError' && err.code == 11000) {
                 return res.status(400).json({
                     success: false,
-                    message: 'Duplicate record, resource already exists!'
+                    message: messages.error.DUPLICATE_RESOURCE
                 })
             } else {
                 next(err);
