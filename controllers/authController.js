@@ -6,7 +6,7 @@ const sendEmail = require('../utils/sendEmail');
 const register = asyncErrorHandler(async (req, res) => {
     const { username, email, password } = req.body;
     let user = await User.create({ username, email, password });
-    let token = user.generateSignedJwtToken();
+    let token = await user.generateSignedJwtToken();
     await user.save();
 
     res.status(200).json({
@@ -22,7 +22,7 @@ const login = asyncErrorHandler(async (req, res) => {
     if (user) {
         const isPasswordValid = user.isPasswordsMatched(req.body.password);
         if (isPasswordValid) {
-            let token = user.generateSignedJwtToken();
+            let token = await user.generateSignedJwtToken();
             await user.save()
             res.status(200).json({
                 success: true,

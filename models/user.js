@@ -45,16 +45,22 @@ UserSchema.pre('save', async function (next) {
     }
 });
 
-// Generate JWT token
-UserSchema.methods.generateSignedJwtToken = function () {
-    const user = {
-        id: this._id,
-        username: this.username,
-        role: this.role
+// Generate JWT token asynchronously
+UserSchema.methods.generateSignedJwtToken = async function () {
+    try {
+        const user = {
+            id: this._id,
+            username: this.username,
+            role: this.role
+        }
+        const token = await jwt.sign(user, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_EXPIRE
+        });
+        return token;
+
+    } catch (err) {
+        throw err
     }
-    return jwt.sign(user, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE
-    });
 }
 
 // Compare entered password with hashed password
