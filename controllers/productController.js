@@ -22,7 +22,7 @@ const getProduct = asyncErrorHandler(async (req, res) => {
     }
     res.status(200).json({
         success: true,
-        message: messages.success.GET_RESOUCRE,
+        message: messages.success.GET_RESOURCE,
         data: product
     });
 });

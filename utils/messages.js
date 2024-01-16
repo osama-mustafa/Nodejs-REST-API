@@ -6,7 +6,7 @@ module.exports = {
         FORGOT_PASSWORD: 'If provided email is correct, we will send you reset password instructions',
         UPDATE_PASSWORD: 'Password updated successfully',
         RESET_PASSWORD: 'Password has been reset successfully, you can now login with the new password',
-        GET_RESOUCRE: 'Fetch resource successfully',
+        GET_RESOURCE: 'Fetch resource successfully',
         GET_RESOURCES: 'Fetch resources successfully',
         CREATE_RESOURCE: 'Create resource successfully',
         UPDATE_RESOUCRE: 'Update resource successfully',

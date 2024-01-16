@@ -18,7 +18,7 @@ const getUser = asyncErrorHandler(async (req, res) => {
     if (user) {
         res.status(200).json({
             success: true,
-            message: messages.success.GET_RESOUCRE,
+            message: messages.success.GET_RESOURCE,
             data: user
         });
     } else {
