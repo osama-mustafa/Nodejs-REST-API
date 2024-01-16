@@ -4,12 +4,8 @@ const { generateRandomToken, storeToken, isValidToken, setNewPassword } = requir
 const sendEmail = require('../utils/sendEmail');
 
 const register = asyncErrorHandler(async (req, res) => {
-    let payload = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-    }
-    let user = await User.create(payload);
+    const { username, email, password } = req.body;
+    let user = await User.create({ username, email, password });
     let token = user.generateSignedJwtToken();
     await user.save();
 
