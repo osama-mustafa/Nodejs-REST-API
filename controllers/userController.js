@@ -1,12 +1,13 @@
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const User = require('../models/user');
+const messages = require('../utils/messages');
 
 
 const getUsers = asyncErrorHandler(async (req, res) => {
     const users = await User.find({});
     res.status(200).json({
         success: true,
-        message: 'Fetch all users successfully',
+        message: messages.success.GET_RESOURCES,
         count: users.length,
         data: users
     });
@@ -17,13 +18,13 @@ const getUser = asyncErrorHandler(async (req, res) => {
     if (user) {
         res.status(200).json({
             success: true,
-            message: 'Fetch user successfully',
+            message: messages.success.GET_RESOUCRE,
             data: user
         });
     } else {
         res.status(404).json({
             success: false,
-            message: `User with id ${req.params.id} is not found`,
+            message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
 });
@@ -38,7 +39,7 @@ const createUser = asyncErrorHandler(async (req, res) => {
 
     res.status(201).json({
         success: true,
-        message: 'User created successfully',
+        message: messages.success.CREATE_RESOURCE,
         data: user
     });
 });
@@ -52,13 +53,13 @@ const updateUser = asyncErrorHandler(async (req, res) => {
         });
         res.status(200).json({
             success: true,
-            message: 'Update user successfully',
+            message: messages.success.UPDATE_RESOUCRE,
             data: user
         });
     } else {
         res.status(404).json({
             success: false,
-            message: `User with id ${req.params.id} is not found`,
+            message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
 });
@@ -69,13 +70,13 @@ const deleteUser = asyncErrorHandler(async (req, res) => {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json({
             success: true,
-            message: 'Delete user successfully',
+            message: messages.success.DELETE_RESOURCE,
         });
 
     } else {
         res.status(404).json({
             success: false,
-            message: `User with id ${req.params.id} is not found`,
+            message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
 });
