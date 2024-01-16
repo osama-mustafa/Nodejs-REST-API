@@ -6,10 +6,6 @@ const ResetPasswordTokenSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
     expiredAt: {
         type: Date,
         default: () => Date.now() + 10 * 60 * 1000
@@ -18,6 +14,8 @@ const ResetPasswordTokenSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
+}, {
+    timestamps: true,
 });
 
 

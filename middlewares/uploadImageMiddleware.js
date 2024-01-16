@@ -41,7 +41,6 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: function (req, file, cb) {
-        console.log(isImageOriginalNameValid(file.originalname), 'isImageOriginalNameValid(file.originalname)')
         if (!isImageOriginalNameValid(file.originalname)) {
             cb(new Error('Invalid characters in image name, please rename it, or upload another image'))
         }

@@ -25,10 +25,8 @@ const UserSchema = new mongoose.Schema({
     blacklist_tokens: {
         type: [String],
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+}, {
+    timestamps: true
 });
 
 // Hash password before save or when user change password
