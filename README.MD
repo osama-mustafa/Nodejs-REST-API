@@ -1,7 +1,6 @@
 ## RESTful API with Express & Mongo Has The Following Features: 
 - API Documentation
 - API Rate Limiting
-- API Versioning
 - RESTful Routing
 - JWT-Based, Stateless Authentication
 - Error Handling
