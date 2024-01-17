@@ -6,8 +6,12 @@ const FilterAPI = require('../utils/filterAPI');
 const getProducts = asyncErrorHandler(async (req, res) => {
     // const products = await Product.find({}).populate('user', 'username');
     let query = Product.find();
-    let result = await new FilterAPI(query, req.query)
-        .select();
+    let featuresAPI = new FilterAPI(query, req.query)
+        .select()
+        .sort();
+
+    let result = await featuresAPI.query;
+
 
     res.status(200).json({
         success: true,
