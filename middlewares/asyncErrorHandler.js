@@ -15,7 +15,10 @@ const asyncHandler = (fn) => (req, res, next) => {
                     message: messages.error.DUPLICATE_RESOURCE
                 })
             } else {
-                next(err);
+                return res.status(500).json({
+                    success: false,
+                    message: messages.error.SERVER_ERROR
+                });
             }
         });
 }

@@ -17,6 +17,7 @@ module.exports = {
         DUPLICATE_RESOURCE: 'Duplicate record, resource already exists!',
         NOT_AUTHORIZED: 'Your are not authorized to access this route!',
         FORBIDDEN: 'You don\'t have permissions to access this route!',
+        SERVER_ERROR: 'Internal server error',
         INCORRECT_OLD_PASSWORD: 'Old password is incorrect',
         INVALID_CREDENTIALS: 'Invalid credentials',
         INVALID_TOKEN: 'Invalid token',
