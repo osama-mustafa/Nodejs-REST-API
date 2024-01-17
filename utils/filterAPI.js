@@ -1,7 +1,7 @@
 
 class FilterAPI {
-    constructor(query, queryString) {
-        this.query = query;
+    constructor(mongooseQuery, queryString) {
+        this.mongooseQuery = mongooseQuery;
         this.queryString = queryString;
     }
 
@@ -10,10 +10,10 @@ class FilterAPI {
             let selectFields;
             if (this.queryString.select.includes(',')) {
                 selectFields = this.queryString.select.split(',');
-                this.query = this.query.select(selectFields);
+                this.mongooseQuery = this.mongooseQuery.select(selectFields);
             } else {
                 selectFields = this.queryString.select;
-                this.query = this.query.select(selectFields)
+                this.mongooseQuery = this.mongooseQuery.select(selectFields)
             }
         }
         return this;
@@ -26,9 +26,9 @@ class FilterAPI {
             sortBy = this.queryString.sort || this.queryString.sortBy;
             if (this.queryString.order) {
                 orderBy = this.queryString.order;
-                this.query = this.query.sort([sortBy, orderBy]);
+                this.mongooseQuery = this.mongooseQuery.sort([sortBy, orderBy]);
             } else {
-                this.query = this.query.sort(sortBy);
+                this.mongooseQuery = this.mongooseQuery.sort(sortBy);
             }
         }
         return this;
