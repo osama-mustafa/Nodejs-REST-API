@@ -1,15 +1,22 @@
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const User = require('../models/user');
+const FilterAPI = require('../utils/filterAPI');
 const messages = require('../utils/messages');
 
 
 const getUsers = asyncErrorHandler(async (req, res) => {
-    const users = await User.find({});
+    let query = User.find();
+    let filterAPI = new FilterAPI(query, req.query)
+        .select()
+        .sort()
+        .paginate();
+
+    let result = await filterAPI.mongooseQuery;
     res.status(200).json({
         success: true,
         message: messages.success.GET_RESOURCES,
-        count: users.length,
-        data: users
+        count: result.length,
+        data: result
     });
 });
 

@@ -6,12 +6,12 @@ const FilterAPI = require('../utils/filterAPI');
 const getProducts = asyncErrorHandler(async (req, res) => {
     // const products = await Product.find({}).populate('user', 'username');
     let query = Product.find();
-    let featuresAPI = new FilterAPI(query, req.query)
+    let filterAPI = new FilterAPI(query, req.query)
         .select()
         .sort()
         .paginate();
-    let result = await featuresAPI.mongooseQuery;
 
+    let result = await filterAPI.mongooseQuery;
     res.status(200).json({
         success: true,
         message: messages.success.GET_RESOURCES,
