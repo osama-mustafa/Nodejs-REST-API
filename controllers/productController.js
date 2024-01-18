@@ -8,7 +8,8 @@ const getProducts = asyncErrorHandler(async (req, res) => {
     let query = Product.find();
     let featuresAPI = new FilterAPI(query, req.query)
         .select()
-        .sort();
+        .sort()
+        .paginate();
 
     let result = await featuresAPI.mongooseQuery;
 

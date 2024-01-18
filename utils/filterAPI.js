@@ -32,6 +32,16 @@ class FilterAPI {
             }
         }
         return this;
+    };
+
+    paginate() {
+        let documentsPerPage = process.env.DOCUMENTS_PER_PAGE;
+        if (this.queryString.page) {
+            let pageNumber = this.queryString.page;
+            this.mongooseQuery = this.mongooseQuery.skip((pageNumber - 1) * documentsPerPage)
+                .limit(documentsPerPage)
+        }
+        return this;
     }
 }
 
