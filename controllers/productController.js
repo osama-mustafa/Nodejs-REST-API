@@ -10,9 +10,7 @@ const getProducts = asyncErrorHandler(async (req, res) => {
         .select()
         .sort()
         .paginate();
-
     let result = await featuresAPI.mongooseQuery;
-
 
     res.status(200).json({
         success: true,
