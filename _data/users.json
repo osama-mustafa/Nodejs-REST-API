@@ -1,0 +1,72 @@
+[
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72a",
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "password": "admin",
+        "role": "admin"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72b",
+        "username": "ahmed",
+        "email": "ahmed@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72c",
+        "username": "ali",
+        "email": "ali@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72d",
+        "username": "karim",
+        "email": "karim@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72e",
+        "username": "saeed",
+        "email": "saeed@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d72f",
+        "username": "tarek",
+        "email": "tarek@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d730",
+        "username": "mahmoud",
+        "email": "mahmoud@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d731",
+        "username": "maged",
+        "email": "maged@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d732",
+        "username": "samir",
+        "email": "samir@gmail.com",
+        "password": "password",
+        "role": "user"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3d733",
+        "username": "mazen",
+        "email": "mazen@gmail.com",
+        "password": "password",
+        "role": "user"
+    }
+]

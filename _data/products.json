@@ -1,0 +1,72 @@
+[
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc11",
+        "name": "product 1",
+        "description": "description of product 1",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72a"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc12",
+        "name": "product 2",
+        "description": "description of product 2",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72a"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc13",
+        "name": "product 3",
+        "description": "description of product 3",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72b"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc14",
+        "name": "product 4",
+        "description": "description of product 4",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72b"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc15",
+        "name": "product 5",
+        "description": "description of product 5",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72c"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc16",
+        "name": "product 6",
+        "description": "description of product 6",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72c"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc17",
+        "name": "product 7",
+        "description": "description of product 7",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72d"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc18",
+        "name": "product 8",
+        "description": "description of product 8",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72d"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc19",
+        "name": "product 9",
+        "description": "description of product 9",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72e"
+    },
+    {
+        "_id": "5f4bcc4a0fba1d5b06e3dc20",
+        "name": "product 10",
+        "description": "description of product 10",
+        "default": "no_image.jpeg",
+        "user": "5f4bcc4a0fba1d5b06e3d72e"
+    }
+]
