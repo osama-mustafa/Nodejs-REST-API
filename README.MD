@@ -12,5 +12,5 @@
 ## How to run the project
 - Create your .env file from .env.example with your mongo database credentials 
 - Run the command "npm run dev" for starting the server
-- Check API documentation via localhost:3000/api-docs
+- Check API documentation via http://localhost:3000/api-docs/
 - Run the command "node seeder.js -i" to seed data
