@@ -38,5 +38,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(express.static('public'));
 
 app.listen(PORT, () => {
-    console.log(`REST API App is working on port ${PORT}`);
+    console.log(`REST API App is working on port ${PORT} and ${process.env.NODE_ENV} environment`);
 });
