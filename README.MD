@@ -13,4 +13,7 @@
 - Create your .env file from .env.example with your mongo database credentials 
 - Run the command "npm run dev" for starting the server
 - Check API documentation via http://localhost:3000/api-docs/
-- Run the command "node seeder.js -i" to seed data
+- Run the command "node seeder.js -i" to seed dummy data
+- After data seeding, you can login with admin credentials: 
+    - email: admin@gmail.com
+    - pawwrod: admin
