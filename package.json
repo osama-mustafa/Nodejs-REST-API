@@ -4,7 +4,7 @@
     "description": "Nodejs REST API",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "dev": "nodemon server.js",
         "seed": "node seeder.js"
     },
@@ -25,6 +25,8 @@
         "yaml": "^2.3.4"
     },
     "devDependencies": {
-        "nodemon": "^3.0.2"
+        "jest": "^29.7.0",
+        "nodemon": "^3.0.2",
+        "supertest": "^6.3.4"
     }
 }

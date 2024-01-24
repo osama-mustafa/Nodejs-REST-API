@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const messages = require('../utils/messages');
 const FilterAPI = require('../utils/filterAPI');
+const { HTTP_STATUS } = require('../utils/httpCodes');
 
 const getProducts = asyncErrorHandler(async (req, res) => {
     let query = Product.find();
@@ -11,7 +12,7 @@ const getProducts = asyncErrorHandler(async (req, res) => {
         .paginate();
 
     let result = await filterAPI.mongooseQuery;
-    res.status(200).json({
+    res.status(HTTP_STATUS.OK).json({
         success: true,
         message: messages.success.GET_RESOURCES,
         count: result.length,
@@ -27,7 +28,7 @@ const getProduct = asyncErrorHandler(async (req, res) => {
             message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
-    res.status(200).json({
+    res.status(HTTP_STATUS.OK).json({
         success: true,
         message: messages.success.GET_RESOURCE,
         data: product
@@ -42,7 +43,7 @@ const createProduct = asyncErrorHandler(async (req, res) => {
         user: req.user.id
     });
 
-    res.status(201).json({
+    res.status(HTTP_STATUS.CREATED).json({
         success: true,
         message: messages.success.CREATE_RESOURCE,
         data: product
@@ -65,7 +66,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
         new: true
     });
 
-    res.status(200).json({
+    res.status(HTTP_STATUS.OK).json({
         success: true,
         message: messages.success.UPDATE_RESOUCRE,
         data: product
@@ -83,7 +84,7 @@ const deleteProduct = asyncErrorHandler(async (req, res) => {
 
     await Product.findByIdAndDelete(req.params.id);
 
-    res.status(200).json({
+    res.status(HTTP_STATUS.OK).json({
         success: true,
         message: messages.success.DELETE_RESOURCE
     });
