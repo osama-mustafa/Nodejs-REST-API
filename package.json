@@ -4,7 +4,7 @@
     "description": "Nodejs REST API",
     "main": "server.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --detectOpenHandles",
         "dev": "nodemon server.js",
         "seed": "node seeder.js"
     },
