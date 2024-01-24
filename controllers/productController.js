@@ -23,7 +23,7 @@ const getProducts = asyncErrorHandler(async (req, res) => {
 const getProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate('user', 'username');
     if (!product) {
-        return res.status(404).json({
+        return res.status(HTTP_STATUS.NOT_FOUND).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND,
         });
@@ -53,7 +53,7 @@ const createProduct = asyncErrorHandler(async (req, res) => {
 const updateProduct = asyncErrorHandler(async (req, res) => {
     let product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(404).json({
+        return res.status(HTTP_STATUS.NOT_FOUND).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND
         });
@@ -76,7 +76,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
 const deleteProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(404).json({
+        return res.status(HTTP_STATUS.NOT_FOUND).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND,
         });
