@@ -12,7 +12,7 @@ const getProducts = asyncErrorHandler(async (req, res) => {
         .paginate();
 
     let result = await filterAPI.mongooseQuery;
-    res.status(HTTP_STATUS.OK).json({
+    res.status(200).json({
         success: true,
         message: messages.success.GET_RESOURCES,
         count: result.length,
@@ -23,12 +23,12 @@ const getProducts = asyncErrorHandler(async (req, res) => {
 const getProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id).populate('user', 'username');
     if (!product) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({
+        return res.status(404).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND,
         });
     }
-    res.status(HTTP_STATUS.OK).json({
+    res.status(200).json({
         success: true,
         message: messages.success.GET_RESOURCE,
         data: product
@@ -43,7 +43,7 @@ const createProduct = asyncErrorHandler(async (req, res) => {
         user: req.user.id
     });
 
-    res.status(HTTP_STATUS.CREATED).json({
+    res.status(201).json({
         success: true,
         message: messages.success.CREATE_RESOURCE,
         data: product
@@ -53,7 +53,7 @@ const createProduct = asyncErrorHandler(async (req, res) => {
 const updateProduct = asyncErrorHandler(async (req, res) => {
     let product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({
+        return res.status(404).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND
         });
@@ -66,7 +66,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
         new: true
     });
 
-    res.status(HTTP_STATUS.OK).json({
+    res.status(200).json({
         success: true,
         message: messages.success.UPDATE_RESOUCRE,
         data: product
@@ -76,7 +76,7 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
 const deleteProduct = asyncErrorHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(HTTP_STATUS.NOT_FOUND).json({
+        return res.status(404).json({
             success: false,
             message: messages.error.RESOURCE_NOT_FOUND,
         });
@@ -84,7 +84,7 @@ const deleteProduct = asyncErrorHandler(async (req, res) => {
 
     await Product.findByIdAndDelete(req.params.id);
 
-    res.status(HTTP_STATUS.OK).json({
+    res.status(200).json({
         success: true,
         message: messages.success.DELETE_RESOURCE
     });

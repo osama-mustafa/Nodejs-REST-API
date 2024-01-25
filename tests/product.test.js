@@ -1,8 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
-const { HTTP_STATUS } = require('../utils/httpCodes')
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNGJjYzRhMGZiYTFkNWIwNmUzZDcyYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDYwMTc0OTYsImV4cCI6MTcwNjEwMzg5Nn0.5wvfN9qI-qsr0eeGp4E9jOZRX33UaS2_8-7lIICgx-8'
-
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmNGJjYzRhMGZiYTFkNWIwNmUzZDcyYSIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDYxMjU5NjIsImV4cCI6MTcwNjIxMjM2Mn0.snpyq9mMjqpYp9Px1qxLC7J1TSSkknDiZOm5VajmjtA'
 
 
 test('return all products', async () => {
@@ -24,7 +22,7 @@ test('create new product', async () => {
         });
 
     expect(response.headers["content-type"]).toMatch(/application\/json/);
-    expect(response.status).toEqual(HTTP_STATUS.CREATED);
+    expect(response.status).toEqual(201);
     expect(response.body.data._id).toBeDefined();
 });
 
@@ -38,7 +36,7 @@ test('update existing product', async () => {
             description: 'updated description for the product'
         });
     expect(response.headers["content-type"]).toMatch(/application\/json/);
-    expect(response.status).toEqual(HTTP_STATUS.OK);
+    expect(response.status).toEqual(200);
     expect(response.body.data.description).toEqual('updated description for the product');
 });
 
@@ -48,7 +46,6 @@ test('get product', async () => {
         .set('Accept', 'application/json')
 
     expect(response.headers["content-type"]).toMatch(/application\/json/);
-    expect(response.status).toEqual(HTTP_STATUS.OK);
-    console.log(response.body.data, "response.body.data")
+    expect(response.status).toEqual(200);
     expect(response.body.data._id).toBe('5f4bcc4a0fba1d5b06e3dc11')
 });
