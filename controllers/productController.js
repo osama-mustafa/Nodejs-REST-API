@@ -2,7 +2,6 @@ const Product = require('../models/product');
 const asyncErrorHandler = require('../middlewares/asyncErrorHandler');
 const messages = require('../utils/messages');
 const FilterAPI = require('../utils/filterAPI');
-const { HTTP_STATUS } = require('../utils/httpCodes');
 
 const getProducts = asyncErrorHandler(async (req, res) => {
     let query = Product.find();
