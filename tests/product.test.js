@@ -8,7 +8,7 @@ describe('GET /api/v1/products', () => {
             .get('/api/v1/products')
             .set('Accept', 'application/json');
         expect(response.headers["content-type"]).toMatch(/application\/json/);
-        expect(response.status).toEqual(200);
+        expect(response.status).toBe(200);
     });
 });
 
@@ -24,7 +24,7 @@ describe('POST /api/v1/products', () => {
             });
 
         expect(response.headers["content-type"]).toMatch(/application\/json/);
-        expect(response.status).toEqual(201);
+        expect(response.status).toBe(201);
         expect(response.body.data._id).toBeDefined();
     });
 });
@@ -36,7 +36,7 @@ describe('GET /api/v1/products/:id', () => {
             .set('Accept', 'application/json')
 
         expect(response.headers["content-type"]).toMatch(/application\/json/);
-        expect(response.status).toEqual(200);
+        expect(response.status).toBe(200);
         expect(response.body.data._id).toBe('5f4bcc4a0fba1d5b06e3dc11')
     });
 });
@@ -52,7 +52,7 @@ describe('PUT a/pi/v1/products/:id', () => {
                 description: 'updated description for the product'
             });
         expect(response.headers["content-type"]).toMatch(/application\/json/);
-        expect(response.status).toEqual(200);
+        expect(response.status).toBe(200);
         expect(response.body.data.description).toEqual('updated description for the product');
     });
 })
